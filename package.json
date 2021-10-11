@@ -2,5 +2,9 @@
   "name": "webhook",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "pm2 start ./webhook.js --name webhook --watch",
+    "stop": "pm2 stop webhook"
+  },
   "license": "MIT"
 }
