@@ -17,4 +17,4 @@ docker rm test-vue-container
 echo "启动新容器"
 # 端口映射 宿主机 - 映射到 - 容器内容的 3000端口
 # -d 后台运行
-docker container run -p 3000:3000 --name test-vue-container -d test-vue:1.0
+docker container run -p 80:80 --name test-vue-container -d test-vue:1.0
