@@ -10,6 +10,7 @@ git pull origin main
 echo "构建编译"
 npm run build
 echo "开始执行构建"
+# -t 是打标签的意思~
 docker build -t test-vue:1.0 .
 echo "停止并删除旧容器"
 docker stop test-vue-container
