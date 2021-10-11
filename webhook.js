@@ -1,6 +1,7 @@
 const http = require('http');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
+// let sendMail = require('./sendMail');
 const SECRET = '123456';
 function sign(body) {
   return `sha1=${crypto.createHmac('sha1', SECRET).update(body).digest('hex')}`;
@@ -34,8 +35,18 @@ const server = http.createServer((req, res) => {
           buffers.push(buffer);
         });
         child.stdout.on('end', () => {
-          let logs = Buffer.concat(buffers);
+          let logs = Buffer.concat(buffers).toString();
           console.log('%c 🍟 logs: ', 'font-size:20px;background-color: #42b983;color:#fff;', logs);
+          const text = `
+          <h1>部署日期： ${new Date()}</h1>
+          <h1>部署人： ${payload.pusher.name}</h1>
+          <h1>部署邮箱： ${payload.pusher.email}</h1>
+          <h1>提交信息： ${payload.head_commit&&payload.head_commit['message']}</h1>
+          <h1>提交信息： ${logs.replace("\r\n", "<br />")}</h1>
+          `;
+          console.log('%c 🥃 text: ', 'font-size:20px;background-color: #465975;color:#fff;', text);
+
+          // sendMail(text);
         })
       }
     });
